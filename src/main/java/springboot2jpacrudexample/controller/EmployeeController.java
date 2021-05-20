@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import springboot2jpacrudexample.dto.EmployeeDto;
 import springboot2jpacrudexample.exception.ResourceNotFoundException;
 import springboot2jpacrudexample.model.Employee;
 import springboot2jpacrudexample.repository.EmployeeRepository;
@@ -40,9 +41,14 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employee);
     }
 
+//    @PostMapping("/employees")
+//    public Employee createEmployee(@Valid @RequestBody Employee employee) {
+//        return employeeRepository.save(employee);
+//    }
+
     @PostMapping("/employees")
-    public Employee createEmployee(@Valid @RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+    public Employee createEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
+        return employeeRepository.save(new Employee(employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getEmailId()));
     }
 
     @PutMapping("/employees/{id}")
